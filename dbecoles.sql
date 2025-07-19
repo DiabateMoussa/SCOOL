@@ -62,7 +62,7 @@ alter table utilisateurs add constraint ut_fkeu foreign key (id_ecol) references
 create table ann_scolaire(
     id_ann serial,
     annee_sc varchar(20),
-    anne  date 
+    anne  date,
     id_ecol int
     
 );
@@ -106,7 +106,7 @@ create table FONCTION(
 --- ============ end table FONCTION ==================
 
 --- ============ contraint table FONCTION ==================
-alter table FONCTION add constraint fo_pkey primary key (fo);
+alter table FONCTION add constraint fo_pkey primary key (id_fo);
 alter table FONCTION add constraint fo_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
 --- ============ ennd contraint table FONCTION ==================
 
@@ -171,8 +171,8 @@ create table CLASSES(
 alter table CLASSES add constraint cl_pkey primary key (id_cl);
 alter table CLASSES  alter column nom_cl set not null ;
 alter table CLASSES alter column coef set not null ;
-alter table CLASSES ad constraint cl_unique unique (nom_cl)
-alter table CLASSES ad constraint cl_fkey foreign key (id_ecol) references ecoles on update cascade on delete cascade;
+alter table CLASSES add constraint cl_unique unique (nom_cl);
+alter table CLASSES add constraint cl_fkey foreign key (id_ecol) references ecoles on update cascade on delete cascade;
 --- ============ ennd contraint table CLASSES ==================
 
 --- ============ table SERIES ==================
@@ -184,7 +184,7 @@ create table SERIES(
 --- ============ contraint table SERIES ==================
 alter table SERIES add constraint se_pkey primary key (id_se);
 alter table SERIES  alter column nom_se set not null ;
-alter table SERIES add constraint se_unique unique (nom_se)
+alter table SERIES add constraint se_unique unique (nom_se);
 alter table SERIES add constraint se_fkey foreign key (id_ecol) references ecoles on update cascade on delete cascade;
 --- ============ ennd contraint table SERIES ==================
 
@@ -193,11 +193,11 @@ create table MATIERES(
     nom_ma1 varchar(50),
     nom_ma2 varchar(50),
     coef_ma int,
-    id_ecol  int, 
+    id_ecol  int 
 );
 --- ============ contraint table MATIERES ==================
 alter table MATIERES add constraint ma_pkey primary key (id_ma);
-alter table MATIERES add constraint ma_unique unique (nom_ma1)
+alter table MATIERES add constraint ma_unique unique (nom_ma1);
 alter table MATIERES add constraint ma_fkey foreign key (id_ma) references ecoles on update cascade on delete cascade;
 --- ============ ennd contraint table MATIERES ==================
 
@@ -212,7 +212,7 @@ create table EMPLOYEURS(
     fonction varchar(20),
     dateen date,
     sexe varchar(10),
-    id_ecol  int, 
+    id_ecol  int,
 );
 --- ============ contraint table EMPLOYEURS ==================
 alter table EMPLOYEURS add constraint emp_pkey primary key (id_em);
@@ -245,7 +245,7 @@ create table MATIERECLASSE(
     id_ma_cl serial,
     id_ma int,
     id_cl int,
-    id_em int,   
+    id_em int   
 );
 --- ============ contraint table MATIERECLASSE ==================
 alter table MATIERECLASSE add constraint ma_pkey primary key (id_ma_cl);
