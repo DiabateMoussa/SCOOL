@@ -17,7 +17,7 @@ create table dg(
 alter table dg add constraint dg_pkey primary key (id_dg);
 alter table dg alter column email_dg set not null ;
 alter table dg alter column pass_dg set not null ;
-alter table dg  add constraint dg_unique unique (nom_dg)
+alter table dg  add constraint dg_unique unique (nom_dg);
 --- ============ ennd contraint table DG ==================
 
 
