@@ -203,4 +203,102 @@ alter table MATIERES constraint ma_unique unique (nom_ma1)
 alter table MATIERES constraint ma_fkey foreign key (id_ma) references to (ECOLES) on update cascade on delete cascade;
 --- ============ ennd contraint table MATIERES ==================
 
+--- ============ table EMPLOYEURS ==================
+create table EMPLOYEURS(
+    id_em serial,
+    nom_em varchar(20),
+    ader_em varchar(40),
+    tel_em varchar(40), 
+    typeem varchar(20),
+    diplome varchar(20),
+    fonction varchar(20),
+    dateen date
+    sexe varchar(10),
+    id_ecol  int, 
+);
+--- ============ contraint table EMPLOYEURS ==================
+alter table EMPLOYEURS add constraint emp_pkey primary key (id_em);
+alter table EMPLOYEURS  add constraint not null nom_em;
+alter table EMPLOYEURS constraint emp_fkey foreign key (id_ecol) references to (ecoles) on update cascade on delete cascade;
+--- ============ ennd contraint table EMPLOYEURS ==================
+
+--- ============ table eleves ==================
+create table eleves(
+    id_el serial,
+    num_el varchar(35),
+    nom_el varchar(35),
+    img_el varchar(65),
+   id_ecol int,
+    id_prt int
+
+);
+--- ============ end table eleves ==================
+
+
+--- ============ contraint table eleves ==================
+alter table eleves add constraint el_pkey primary key (id_el);
+alter table eleves add constraint el_fkey1 foreign key (id_ecol) references to ecoles on update cascade on delete cascade;
+alter table eleves add constraint el_fkey2 foreign key (id_prt) references to parents on update cascade on delete cascade;
+--- ============ ennd contraint table eleves ==================
+
+
+--- ============ table MATIERECLASSE ==================
+create table MATIERECLASSE(
+    id_ma_cl serial,
+    id_ma int,
+    id_cl int,
+    id_em int,   
+);
+--- ============ contraint table MATIERECLASSE ==================
+alter table MATIERECLASSE add constraint ma_pkey primary key (id_ma_cl);
+alter table MATIERECLASSE constraint macl1_fkey foreign key (id_ma) references to (MATIERES) on update cascade on delete cascade;
+alter table MATIERECLASSE constraint macl2_fkey foreign key (id_cl) references to (CLASSES) on update cascade on delete cascade;
+alter table MATIERECLASSE constraint macl2_fkey foreign key (id_em) references to (employeurs) on update cascade on delete cascade;
+--- ============ ennd contraint table MATIERECLASSE ==================
+
+
+--- ============ table CLASELVES ==================
+create table claselves(
+    idclel  serial,
+    montant_a_paiye  numeric,
+    montant_arier numeric,
+    inscrption varchar(35),
+    type_el varchar(65),
+    eta_etuditn  varchar(15),
+    id_ecol int,
+    id_cl  int,
+    id_el  int,
+    id_ann int
+
+);
+--- ============ end table eleves ==================
+
+
+--- ============ contraint table eleves ==================
+alter table claselves add constraint clv_pkey primary key (idclel);
+alter table claselves add constraint clv_fkey1 foreign key (id_ecol) references to ecoles on update cascade on delete cascade;
+alter table claselves add constraint clv_fkey2 foreign key (id_cl) references to calsses on update cascade on delete cascade;
+alter table claselves add constraint clv_fkey3 foreign key (id_el) references to eleves on update cascade on delete cascade;
+alter table claselves add constraint clv_fkey4 foreign key (id_ann) references to ann_scolaire on update cascade on delete cascade;
+--- ============ ennd contraint table eleves ==================
+
+
+--- ============ table PAIEMENT_EMPLOYEURS ==================
+create table PAIEMENT_EMPLOYEURS(
+    id_pay  serial,
+    id_em int,
+    id_moi int,
+    id_ecol int
+
+);
+--- ============ end table PAIEMENT_EMPLOYEURS ==================
+
+--- ============ contraint table PAIEMENT_EMPLOYEURS ==================
+alter table PAIEMENT_EMPLOYEURS add constraint pay_pkey primary key (id_pay);
+alter table PAIEMENT_EMPLOYEURS add constraint pay_fkey1 foreign key (id_moi) references to moi on update cascade on delete cascade;
+alter table PAIEMENT_EMPLOYEURS add constraint pay_fkey2 foreign key (id_em) references to EMPLOYEURS on update cascade on delete cascade;
+alter table PAIEMENT_EMPLOYEURS add constraint pay_fkey3 foreign key (id_ecol) references to ecoles on update cascade on delete cascade;
+--- ============ ennd contraint table PAIEMENT_EMPLOYEURS ==================
+
+
 
