@@ -15,9 +15,9 @@ create table dg(
 
 --- ============ contraint table DG ==================
 alter table dg add constraint dg_pkey primary key (id_dg);
-alter table dg alter column email_dg not null ;
-alter table dg alter column pass_dg not null ;
-alter table dg  add constraint dg_unique unique (nom_dg,)
+alter table dg alter column email_dg set not null ;
+alter table dg alter column pass_dg set not null ;
+alter table dg  add constraint dg_unique unique (nom_dg)
 --- ============ ennd contraint table DG ==================
 
 
@@ -54,7 +54,7 @@ create table utilisateurs(
 
 --- ============ contraint table UTILISATEURS ==================
 alter table utilisateurs add constraint ut_pkey primary key (id_ut);
-alter table utilisateurs add constraint ut_unique (tel_ut);
+alter table utilisateurs add constraint ut_unique unique (tel_ut);
 alter table utilisateurs add constraint ut_fkeu foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
 --- ============ ennd contraint table UTILISATEURS ==================
 
@@ -169,10 +169,10 @@ create table CLASSES(
 
 --- ============ contraint table CLASSES ==================
 alter table CLASSES add constraint cl_pkey primary key (id_cl);
-alter table CLASSES  alter column nom_cl not null ;
-alter table CLASSES alter column coef not null ;
-alter table CLASSES constraint cl_unique unique (nom_cl)
-alter table CLASSES constraint cl_fkey foreign key (id_ecol) references ecoles on update cascade on delete cascade;
+alter table CLASSES  alter column nom_cl set not null ;
+alter table CLASSES alter column coef set not null ;
+alter table CLASSES ad constraint cl_unique unique (nom_cl)
+alter table CLASSES ad constraint cl_fkey foreign key (id_ecol) references ecoles on update cascade on delete cascade;
 --- ============ ennd contraint table CLASSES ==================
 
 --- ============ table SERIES ==================
@@ -183,9 +183,9 @@ create table SERIES(
 );
 --- ============ contraint table SERIES ==================
 alter table SERIES add constraint se_pkey primary key (id_se);
-alter table SERIES  alter column nom_se not null ;
-alter table SERIES constraint se_unique unique (nom_se)
-alter table SERIES constraint se_fkey foreign key (id_ecol) references ecoles on update cascade on delete cascade;
+alter table SERIES  alter column nom_se set not null ;
+alter table SERIES add constraint se_unique unique (nom_se)
+alter table SERIES add constraint se_fkey foreign key (id_ecol) references ecoles on update cascade on delete cascade;
 --- ============ ennd contraint table SERIES ==================
 
 create table MATIERES(
@@ -197,9 +197,8 @@ create table MATIERES(
 );
 --- ============ contraint table MATIERES ==================
 alter table MATIERES add constraint ma_pkey primary key (id_ma);
-
-alter table MATIERES constraint ma_unique unique (nom_ma1)
-alter table MATIERES constraint ma_fkey foreign key (id_ma) references ecoles on update cascade on delete cascade;
+alter table MATIERES add constraint ma_unique unique (nom_ma1)
+alter table MATIERES add constraint ma_fkey foreign key (id_ma) references ecoles on update cascade on delete cascade;
 --- ============ ennd contraint table MATIERES ==================
 
 --- ============ table EMPLOYEURS ==================
@@ -211,14 +210,14 @@ create table EMPLOYEURS(
     typeem varchar(20),
     diplome varchar(20),
     fonction varchar(20),
-    dateen date
+    dateen date,
     sexe varchar(10),
     id_ecol  int, 
 );
 --- ============ contraint table EMPLOYEURS ==================
 alter table EMPLOYEURS add constraint emp_pkey primary key (id_em);
-alter table EMPLOYEURS  alter column nom_em not null ;
-alter table EMPLOYEURS constraint emp_fkey foreign key (id_ecol) references ecoles on update cascade on delete cascade;
+alter table EMPLOYEURS  alter column nom_em set not null ;
+alter table EMPLOYEURS add constraint emp_fkey foreign key (id_ecol) references ecoles on update cascade on delete cascade;
 --- ============ ennd contraint table EMPLOYEURS ==================
 
 --- ============ table eleves ==================
@@ -250,9 +249,9 @@ create table MATIERECLASSE(
 );
 --- ============ contraint table MATIERECLASSE ==================
 alter table MATIERECLASSE add constraint ma_pkey primary key (id_ma_cl);
-alter table MATIERECLASSE constraint macl1_fkey foreign key (id_ma) references MATIERES on update cascade on delete cascade;
-alter table MATIERECLASSE constraint macl2_fkey foreign key (id_cl) references CLASSES on update cascade on delete cascade;
-alter table MATIERECLASSE constraint macl2_fkey foreign key (id_em) references  employeurs on update cascade on delete cascade;
+alter table MATIERECLASSE add constraint macl1_fkey foreign key (id_ma) references MATIERES on update cascade on delete cascade;
+alter table MATIERECLASSE add constraint macl2_fkey foreign key (id_cl) references CLASSES on update cascade on delete cascade;
+alter table MATIERECLASSE add constraint macl2_fkey foreign key (id_em) references  employeurs on update cascade on delete cascade;
 --- ============ ennd contraint table MATIERECLASSE ==================
 
 
