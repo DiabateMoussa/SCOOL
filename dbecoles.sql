@@ -299,4 +299,152 @@ alter table PAIEMENT_EMPLOYEURS add constraint pay_fkey3 foreign key (id_ecol) r
 --- ============ ennd contraint table PAIEMENT_EMPLOYEURS ==================
 
 
+--- ============ table CLAS_FRAIS_SCOL ==================
+create table CLAS_FRAIS_SCOL(
+    id_clfsco        serial,
+    inscrption       varchar(55),
+    montant_a_paiye  numeric,
+    id_fsco          int,
+    id_cl            int,
+    id_ecol          int
+
+);
+--- ============ end table CLAS_FRAIS_SCOL ==================
+
+
+--- ============ contraint table CLAS_FRAIS_SCOL ==================
+alter table CLAS_FRAIS_SCOL add constraint clfsc_pkey primary key (id_clfsco);
+alter table CLAS_FRAIS_SCOL add constraint clfsc_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
+alter table CLAS_FRAIS_SCOL add constraint clfsc_fkey2 foreign key (id_fsco) references  FRAIS_SCOL on update cascade on delete cascade;
+alter table CLAS_FRAIS_SCOL add constraint clfsc_fkey3 foreign key (id_cl) references  calsses on update cascade on delete cascade;
+--- ============ ennd contraint table CLAS_FRAIS_SCOL ==================
+
+--- ============ table CONTENU_COMTABLE ==================
+create table CONTENU_COMTABLE(
+    id_cc serial,
+    discription varchar(55),
+    debut_cfa varchar(55),
+    credit_cfa  numeric,
+    id_el  int,
+    id_ope int,
+    id_emtm int,
+    id_ann int,
+    id_ecol int
+
+);
+--- ============ end table CONTENU_COMTABLE ==================
+
+
+--- ============ contraint table CONTENU_COMTABLE ==================
+alter table CONTENU_COMTABLE add constraint ctnuc_pkey primary key (id_cc);
+alter table CONTENU_COMTABLE add constraint ctnuc_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
+alter table CONTENU_COMTABLE add constraint ctnuc_fkey2 foreign key (id_el ) references  eleves on update cascade on delete cascade;
+alter table CONTENU_COMTABLE add constraint ctnuc_fkey3 foreign key (id_ope) references  OPERATION_ELEVE on update cascade on delete cascade;
+alter table CONTENU_COMTABLE add constraint ctnuc_fkey4 foreign key (id_ann) references  ANN_SCOLAIRE on update cascade on delete cascade;
+--- ============ ennd contraint table CONTENU_COMTABLE ==================
+
+--- ============ table EMPLOITEMPS ==================
+create table EMTEMPS(
+    id_emtm  serial,
+    debut varchar(45),
+    fin varchar(45),
+    id_ecol int
+
+);
+--- ============ end table EMTEMPS ==================
+
+
+--- ============ contraint table EMTEMPS ==================
+alter table EMTEMPS add constraint emps_pkey primary key (id_emtm);
+alter table EMTEMPS add constraint emps_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
+--- ============ ennd contraint table EMTEMPS ==================
+
+--- ============ table EMPLOITEMPS ==================
+create table EMPLOITEMPS(
+    id_m_etm  serial,
+    id_ma int,
+    id_cl int,
+    id_emtm int,
+    id_j int,
+    id_ecol int
+
+);
+--- ============ end table EMPLOITEMPS ==================
+
+
+--- ============ contraint table EMPLOITEMPS ==================
+alter table EMPLOITEMPS add constraint empts_pkey primary key (id_m_etm);
+alter table EMPLOITEMPS add constraint empts_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
+alter table EMPLOITEMPS add constraint empts_fkey2 foreign key (id_ma) references  MATIERES on update cascade on delete cascade;
+alter table EMPLOITEMPS add constraint empts_fkey3 foreign key (id_cl) references  CLASSES on update cascade on delete cascade;
+alter table EMPLOITEMPS add constraint empts_fkey4 foreign key (id_emtm) references  EMTEMPS on update cascade on delete cascade;
+alter table EMPLOITEMPS add constraint empts_fkey5 foreign key (id_j) references  JOURS on update cascade on delete cascade;
+--- ============ ennd contraint table EMPLOITEMPS ==================
+
+--- ============ table OPERATION ==================
+create table OPERATION(
+    id_opef  serial,
+    no_opef  numeric,
+    date_opef date,
+    nom_periode  varchar(35),
+    id_ann int,
+    id_ecol int
+
+);
+--- ============ end table OPERATION ==================
+
+
+--- ============ contraint table OPERATION ==================
+alter table OPERATION add constraint opelf_pkey primary key (id_opef);
+alter table OPERATION constraint opelf_unique unique (no_opef,date_opef,nom_periode,id_ann);
+alter table OPERATION add constraint opelf_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
+alter table OPERATION add constraint opelf_fkey2 foreign key (id_ann) references  ann_scolaire on update cascade on delete cascade;
+--- ============ ennd contraint table OPERATION ==================
+
+
+--- ============ table OPERATION_ELEVE ==================
+create table OPERATION_ELEVE(
+    id_ope  serial,
+    no_ope  numeric,
+    date_ope date,
+    id_ann int,
+    id_ecol int
+
+);
+--- ============ end table OPERATION_ELEVE ==================
+
+
+--- ============ contraint table OPERATION_ELEVE ==================
+alter table OPERATION_ELEVE add constraint opel_pkey primary key (id_ope);
+alter table OPERATION_ELEVE constraint opel_unique unique (no_ope,date_ope,id_ann);
+alter table OPERATION_ELEVE add constraint opel_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
+alter table OPERATION_ELEVE add constraint opel_fkey2 foreign key (id_ann) references  ann_scolaire on update cascade on delete cascade;
+--- ============ ennd contraint table OPERATION_ELEVE ==================
+
+--- ============ table NOTEESFR ==================
+create table NOTEESFR(
+    id_ne_cl   serial,
+    nolesel   numeric,
+    note_compo    numeric,
+    notecondouite    numeric,
+    moyen        numeric,
+    moy_coeff    numeric,
+    etat_ma   varchar(25),
+    id_ma int,
+    id_el int,
+    id_opef int,
+    id_ecol int
+
+);
+--- ============ end table NOTEESFR ==================
+
+
+--- ============ contraint table NOTEESFR ==================
+alter table NOTEESFR add constraint notfr_pkey primary key ( id_ne_cl);
+alter table NOTEESFR constraint notfr_unique unique (no_opef,date_opef,nom_periode,id_ma);
+alter table NOTEESFR add constraint notfr_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
+alter table NOTEESFR add constraint notfr_fkey2 foreign key (id_ma) references  MATIERES on update cascade on delete cascade;
+alter table NOTEESFR add constraint notfr_fkey3 foreign key (id_el) references  eleves on update cascade on delete cascade;
+alter table NOTEESFR add constraint notfr_fkey4 foreign key (id_opef) references  OPERATION on update cascade on delete cascade;
+--- ============ ennd contraint table NOTEESFR ==================
 
