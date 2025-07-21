@@ -316,8 +316,26 @@ create table CLAS_FRAIS_SCOL(
 alter table CLAS_FRAIS_SCOL add constraint clfsc_pkey primary key (id_clfsco);
 alter table CLAS_FRAIS_SCOL add constraint clfsc_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
 alter table CLAS_FRAIS_SCOL add constraint clfsc_fkey2 foreign key (id_fsco) references  FRAIS_SCOL on update cascade on delete cascade;
-alter table CLAS_FRAIS_SCOL add constraint clfsc_fkey3 foreign key (id_cl) references  calsses on update cascade on delete cascade;
+alter table CLAS_FRAIS_SCOL add constraint clfsc_fkey3 foreign key (id_cl) references  classes on update cascade on delete cascade;
 --- ============ ennd contraint table CLAS_FRAIS_SCOL ==================
+--- ============ table OPERATION_ELEVE ==================
+create table OPERATION_ELEVE(
+    id_ope  serial,
+    no_ope  numeric,
+    date_ope date,
+    id_ann int,
+    id_ecol int
+
+);
+--- ============ end table OPERATION_ELEVE ==================
+
+
+--- ============ contraint table OPERATION_ELEVE ==================
+alter table OPERATION_ELEVE add constraint opel_pkey primary key (id_ope);
+alter table OPERATION_ELEVE add constraint opel_unique unique (no_ope,date_ope,id_ann);
+alter table OPERATION_ELEVE add constraint opel_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
+alter table OPERATION_ELEVE add constraint opel_fkey2 foreign key (id_ann) references  ann_scolaire on update cascade on delete cascade;
+--- ============ ennd contraint table OPERATION_ELEVE ==================
 
 --- ============ table CONTENU_COMTABLE ==================
 create table CONTENU_COMTABLE(
@@ -396,30 +414,13 @@ create table OPERATION(
 
 --- ============ contraint table OPERATION ==================
 alter table OPERATION add constraint opelf_pkey primary key (id_opef);
-alter table OPERATION constraint opelf_unique unique (no_opef,date_opef,nom_periode,id_ann);
+alter table OPERATION add constraint opelf_unique unique (no_opef, date_opef, nom_periode, id_ann);
 alter table OPERATION add constraint opelf_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
 alter table OPERATION add constraint opelf_fkey2 foreign key (id_ann) references  ann_scolaire on update cascade on delete cascade;
 --- ============ ennd contraint table OPERATION ==================
 
 
---- ============ table OPERATION_ELEVE ==================
-create table OPERATION_ELEVE(
-    id_ope  serial,
-    no_ope  numeric,
-    date_ope date,
-    id_ann int,
-    id_ecol int
 
-);
---- ============ end table OPERATION_ELEVE ==================
-
-
---- ============ contraint table OPERATION_ELEVE ==================
-alter table OPERATION_ELEVE add constraint opel_pkey primary key (id_ope);
-alter table OPERATION_ELEVE constraint opel_unique unique (no_ope,date_ope,id_ann);
-alter table OPERATION_ELEVE add constraint opel_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
-alter table OPERATION_ELEVE add constraint opel_fkey2 foreign key (id_ann) references  ann_scolaire on update cascade on delete cascade;
---- ============ ennd contraint table OPERATION_ELEVE ==================
 
 --- ============ table NOTEESFR ==================
 create table NOTEESFR(
@@ -441,7 +442,6 @@ create table NOTEESFR(
 
 --- ============ contraint table NOTEESFR ==================
 alter table NOTEESFR add constraint notfr_pkey primary key ( id_ne_cl);
-alter table NOTEESFR constraint notfr_unique unique (no_opef,date_opef,nom_periode,id_ma);
 alter table NOTEESFR add constraint notfr_fkey1 foreign key (id_ecol) references  ecoles on update cascade on delete cascade;
 alter table NOTEESFR add constraint notfr_fkey2 foreign key (id_ma) references  MATIERES on update cascade on delete cascade;
 alter table NOTEESFR add constraint notfr_fkey3 foreign key (id_el) references  eleves on update cascade on delete cascade;
